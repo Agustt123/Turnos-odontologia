@@ -1,0 +1,11 @@
+// src/interfaces/user.interface.ts
+
+interface User {
+    id: number;
+    username: string;
+    password: string;
+    email: string;
+  }
+  
+  export default User;
+  
