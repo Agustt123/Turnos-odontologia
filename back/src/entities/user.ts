@@ -19,7 +19,7 @@ export class User {
   @Column({ type: "date" })
   birthdate: Date;
 
-  @OneToOne(() => Credential, { cascade: true }) // Establece la relación uno a uno con la entidad Credential
+  @OneToOne(() => Credential,  ) // Establece la relación uno a uno con la entidad Credential
   @JoinColumn({name:"credencialid"})
   credential: Credential;
 

@@ -1,10 +1,12 @@
-// Simulación de una base de datos de usuarios y contraseñas
-import Credential from "../interface/credencial"
+import { v4 as uuidv4 } from 'uuid'; // Importar la función uuidv4 para generar identificadores únicos
+import Credential from '../interface/credencial';
 
-const users: Record<string, Credential> = {
-    "usuario1": { username: "usuario1", password: "password1" },
-    "usuario2": { username: "usuario2", password: "password2" },
-    "usuario3": { username: "usuario3", password: "password3" }
+// Objeto para simular una base de datos de usuarios y credenciales
+const users: Record<string, Credential> = {};
+
+// Función para generar una credencial única
+const generateCredential = (): string => {
+    return uuidv4(); // Devuelve un identificador único generado aleatoriamente
 };
 
 // Verificar si las credenciales son válidas
@@ -15,7 +17,8 @@ const isValidCredentials = (username: string, password: string): boolean => {
 
 // Agregar un nuevo usuario y sus credenciales
 const addUser = (username: string, password: string): void => {
-    users[username] = { username, password };
+    const credential = generateCredential(); // Generar una nueva credencial
+    users[username] = { username, password,Credencial.}; // Corregir el nombre de la propiedad a 'credential'
 };
 
 // Eliminar un usuario y sus credenciales
@@ -23,4 +26,4 @@ const removeUser = (username: string): void => {
     delete users[username];
 };
 
-export { isValidCredentials, addUser, removeUser };
+export { generateCredential, isValidCredentials, addUser, removeUser };

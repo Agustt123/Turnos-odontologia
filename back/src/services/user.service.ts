@@ -1,36 +1,44 @@
 import { Request, Response } from "express";
-import Iuser from "../interface/userInterface";
-import { generateCredential,checkCredential } from "./Credencial.service";
+import IUser from "../interface/userInterface";
 import { AppDataSource } from "../config";
 import { User } from "../entities/user";
-
-// Arreglo de usuarios precargados
-const users: User[] = [
-    { id: 1, name: "usuario1", password: "password1", email: "usuario1@example.com", birthdate: new Date(), credencialid: 1, turno: [] },
-    { id: 2, name: "usuario2", password: "password2", email: "usuario2@example.com", birthdate: new Date(), credencialid: 2, turno: [] },
-    { id: 3, name: "usuario3", password: "password3", email: "usuario3@example.com", birthdate: new Date(), credencialid: 3, turno: [] }
-];
+import { generateCredential } from "./Credencial.service";
+export {generateCredential} from "../services/Credencial.service"
 
 async function getAllUsersService(): Promise<User[]> {
    try {
-    const user= await AppDataSource.manager.find(User);
+    const users = await AppDataSource.manager.find(User);
     return users;
    } catch (error:any) {
     throw new Error(error);
-    
    } 
 }
 
-function getUserByIdService(id: number): User | undefined {
-    return users.find(user => user.id === id);
+
+
+async function getUserByIdService(id: number): Promise<User | undefined> {
+    try {
+        const user = await AppDataSource.manager.findOne(User, { where: { id } });
+        return user || undefined;
+    } catch (error:any) {
+        throw new Error(error.message);
+    }
 }
 
-function postUserRegisterService(user: User): void {
-    users.push(user);
+
+async function postUserRegisterService(user: User): Promise<void> {
+    try {
+        const credentialId = generateCredential(); // Generar un identificador único para la credencial
+        user.credential = credentialId; // Asignar el identificador único al usuario
+        await AppDataSource.manager.save(User, user);
+    } catch (error:any) {
+        throw new Error(error.message); // Propagar el error con un mensaje descriptivo
+    }
 }
+
 
 async function postUserLoginService(username: string, password: string): Promise<User | undefined> {
-    // Implementa la lógica de inicio de sesión aquí
+    // Implementar lógica de inicio de sesión aquí
     return undefined;
 }
 
@@ -60,7 +68,7 @@ async function getUserByIdController(req: Request, res: Response): Promise<void>
 async function postUserRegisterController(req: Request, res: Response): Promise<void> {
     try {
         const user: User = req.body;
-        postUserRegisterService(user);
+        await postUserRegisterService(user);
         res.status(201).json({ message: "User registered successfully" });
     } catch (error: any) {
         res.status(500).json({ message: error.message });
