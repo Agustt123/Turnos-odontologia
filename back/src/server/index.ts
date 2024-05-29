@@ -1,11 +1,14 @@
-import { HOST, PORT } from "../config";
-import server from "./server";
+import express from 'express';
+import dotenv from 'dotenv';
+import userRoutes from '../routes//user'; // Importar rutas de usuarios
+import appointmentRoutes from '../routes/appointment'; // Importar rutas de citas
 
-import "reflect-metadata";
+dotenv.config();
 
-export function serverInitializer(){
+const app = express();
+app.use(express.json());
 
-    server.listen(PORT, HOST, () => {
-    console.log(`Servidor escuchando en el puerto ${PORT}`);
-});
-};
+app.use('/users', userRoutes);
+app.use('/appointments', appointmentRoutes);
+
+export default app;
