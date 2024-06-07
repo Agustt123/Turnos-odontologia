@@ -1,10 +1,11 @@
-// src/models/appointment.ts
+// src/interface/appointment.ts
+import { TurnoStatus } from './turno'; // Importa el enum TurnoStatus
 
 export interface Appointment {
-    id: number;
-    userId: number;
-    date: string; // Usaremos el formato ISO para las fechas (YYYY-MM-DD)
-    time: string; // Usaremos el formato de 24 horas HH:mm
-    status: 'scheduled' | 'cancelled';
-  }
-  
+  id: number;
+  userId: number;
+  date: Date;
+  time: string;
+  status: TurnoStatus;
+  user: any; // Agrega la propiedad user que se espera en Turno
+}

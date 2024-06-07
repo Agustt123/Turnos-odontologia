@@ -1,21 +1,18 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import server from './server/server';
+import dotenv from "dotenv";
+dotenv.config({ path: "./src/config/.env" });
 
-dotenv.config();
+import { DB_PORT, PORT } from "./config/envs";
+import { AppDataSource } from "./config/data-source";
+import server from "./server/server";
 
-const app = express();
-
-// Configurar el middleware para analizar el cuerpo de las solicitudes con formato JSON
-app.use(express.json());
-
-// Inicializar el servidor
-const PORT = process.env.PORT || 3000;
-
-server.listen(PORT, () => {
-  
-    console.log(`Server listening on http://localhost:${PORT}`);
-});
-
-// Exportar la aplicación para poder usarla en otros archivos si es necesario
-export default app;
+(async () => {
+  try {
+    await AppDataSource.initialize(); 
+    console.log(`Database connected on port ${DB_PORT}`);
+    server.listen(PORT, () => {
+      console.log(`Server listening on http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error('Error connecting to the database:', error);
+  }
+})();

@@ -1,11 +1,10 @@
-import express from "express";
-import userRoutes from "./user/user";
-import appointmentRoutes from "./appointment/appointment";
+import { Router } from 'express';
+import userRouter from './user/user';
+import appointmentRouter from './appointment/appointment';
 
-const router = express.Router();
+const router = Router();
 
-// Montar los enrutadores de usuario y turnos en el enrutador principal
-router.use('/users', userRoutes);
-router.use('/appointments', appointmentRoutes);
+router.use('/users', userRouter);
+router.use('/appointments', appointmentRouter);
 
 export default router;

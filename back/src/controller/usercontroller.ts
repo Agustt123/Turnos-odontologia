@@ -1,44 +1,69 @@
 import { Request, Response } from 'express';
-import  {User} from '../interface/user';
-import { Credential } from '../interface/credencial';
+import { getAllUsersService, getUserByIdService, createUserService, findUserByCredentialId } from '../service/userService';
+import { ICreateUserDto } from '../interface/ICreateUserDto';
+import { User } from '../entities/user';
+import { ICreateCredentialDto } from '../interface/ICreateCredentialDto';
+import { Credencial } from '../interface/credencial';
+import { validarteCredental } from '../service/credentialService';
 
-let users: User[] = [];
-
-export const getUsers = async (req: Request, res: Response) => {
-  res.json(users);
-  
-
+export const getAllUsersController = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const users : User[]|null= await getAllUsersService();
+        res.status(200).json(users);
+    } catch (error:any) {
+        res.status(400).json({ message: error.message });
+    }
 };
 
-export const getUserById = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const user = users.find(user => user.id === parseInt(id));
-  if (user) {
-    res.json(user);
-  } else {
-    res.status(404).send('Usuario no encontrado');
-  }
+
+export const getUserByIdController = async (req: Request<{id: string},{},{}>, res: Response) => {
+    const userId = parseInt(req.params.id);
+    try {
+      const {id} = req.params;
+        const user:User = await getUserByIdService(Number(id));
+        res.status(200).json(user);
+    } catch (error:any) {
+        res.status(400).json({ message: error.message });
+    }
 };
 
-export const registerUser = async (req: Request, res: Response) => {
-  const { name, email, username, password, profilePicture } = req.body;
-  const newUser: User = {
-    id: users.length + 1,
+
+export const createUserController = async (req: Request<{},{},ICreateUserDto>, res: Response) => {
+  try{
+  const{name, email,birthdate,nDni,username,password}=req.body;
+  const newUser: User = await createUserService({
     name,
     email,
-    credentials: { username, password },
-    profilePicture
-  };
-  users.push(newUser);
-  res.status(201).json(newUser);
+    birthdate,
+    nDni,
+    username,
+    password,
+  });
+    res.status(201).json(newUser);
+   }catch (error:any) {
+        res.status(400).json({ message: error.message });
+    }
 };
 
-export const loginUser =  async  (req: Request, res: Response) => {
-  const { username, password } = req.body as Credential;
-  const user = users.find(user => user.credentials.username === username && user.credentials.password === password);
-  if (user) {
-    res.send('Login exitoso');
-  } else {
-    res.status(401).send('Credenciales incorrectas');
+
+export const findUserByCredentialIdController = async (
+  req: Request<{}, {}, ICreateCredentialDto>,
+  res: Response
+) => {
+  try {
+    const { username, password } = req.body;
+    const credential: Credencial = await validarteCredental({
+      username,
+      password,
+    });
+    const user: User|null = await findUserByCredentialId(credential.id);
+    res.status(200).json({
+      loggin: true,
+      user,
+    });
+  } catch (error: any) {
+    res.status(404).json({
+      message: error.message,
+    });
   }
 };

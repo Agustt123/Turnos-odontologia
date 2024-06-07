@@ -1,0 +1,11 @@
+.cardContainer{
+    display: flex;
+    padding: 1em;
+    align-items: center;
+    font-size: 1em;
+    text-align: justify;
+    background-color: rgb(106, 219, 195);
+    imag{
+        height: 150ex;
+    };
+}
