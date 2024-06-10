@@ -1,19 +1,5 @@
-<<<<<<< HEAD
-import "reflect-metadata"
-import { AppDataSource } from "./config";
-import { serverInitializer } from "./server";
-import { error } from "console";
 
-AppDataSource.initialize()
-.then(()=> {
-    console.log("Database connected");
-    serverInitializer()
-})
-.catch((err)=> {
 
-    console.log(err);
-});
-=======
 import dotenv from "dotenv";
 dotenv.config({ path: "./src/config/.env" });
 
@@ -32,4 +18,3 @@ import server from "./server/server";
     console.error('Error connecting to the database:', error);
   }
 })();
->>>>>>> 4798aac

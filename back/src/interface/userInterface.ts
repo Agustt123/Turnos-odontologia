@@ -1,9 +1,9 @@
-import { Credential } from "./credencial";
+import { Credencial } from "./credencial";
 
 interface User {
   name: string;
   email: string;
-  credentials: Credential;
+  credentials: Credencial;
   profilePicture?: string;
 }
 

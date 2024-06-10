@@ -1,3 +1,4 @@
+import React from "react";
 import foto from "../../assets/FOTO.png";
 import styles from "./Card.module.css";
 export default function Card (){
