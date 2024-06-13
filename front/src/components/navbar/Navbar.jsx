@@ -34,7 +34,7 @@ const handleLogout=()=>{
               </Link>  
               { loggin && (
                 <Link to="/appointment" className={styles.navLink}>
-                  <span>RESERVAR</span>
+                  <span>RESERVAS</span>
                 </Link>
               )}
               <Link to="/about" className={styles.navLink}>

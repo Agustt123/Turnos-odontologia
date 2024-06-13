@@ -64,7 +64,7 @@ export default function Appointment() {
 
   return (
     <div className={styles.appointmentContainer}>
-      <h1 className={styles.title}>Reserva</h1>
+      <h1 className={styles.title}>Reservas</h1>
       <div className={styles.cardContainer}>
         {appointments.length > 0 ? (
           sortedAppointments.map(appointment => (
