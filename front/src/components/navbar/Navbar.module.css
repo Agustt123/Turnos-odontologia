@@ -33,4 +33,14 @@ img {
         color: aliceblue;
         cursor: pointer;
     }
+
+}
+a{
+    text-decoration: none;
+    color: inherit;
+}
+a:hover{
+    text-decoration: none;
+    cursor: pointer;
+color: white;
 }

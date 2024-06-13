@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import styles from './Login.module.css';
-
+import { useNavigate } from 'react-router-dom';
+import {useDispatch} from "react-redux";
+import { setUserData } from '../../redux/userSlice';
 const POSTUSER_URL = "http://localhost:3000/users/login";
+
 
 function Login() {
   const initialState = {
@@ -31,7 +34,8 @@ function Login() {
     setUser(updatedUser);
     setErrors(validateUser(updatedUser));
   };
-
+const navigate = useNavigate();
+const dispatch= useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
     const userData = {
@@ -41,8 +45,11 @@ function Login() {
 
     axios.post(POSTUSER_URL, userData)
       .then(({ data }) => {
-        console.log(data);
+       dispatch(setUserData(data))
         alert("Usuario logeado");
+        setUser(initialState);
+        navigate("/home")
+
       })
       .catch(error => alert("Credenciales incorrectas"));
   };

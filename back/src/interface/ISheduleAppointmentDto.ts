@@ -4,5 +4,6 @@ export interface IScheduleAppointmentDto{
     userId: number ;
     description: string; 
     
+    
 }
 export default IScheduleAppointmentDto;

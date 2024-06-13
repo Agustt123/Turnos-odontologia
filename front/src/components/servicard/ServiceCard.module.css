@@ -1,6 +1,4 @@
 .cardContainer {
-    display: flex;
-    align-items: center;
     padding: 20px;
     margin: 20px 0;
     background-color: #fff;
@@ -8,15 +6,8 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
-  .image {
-    width: 150px;
-    height: auto;
-    border-radius: 50%;
-    margin-right: 20px;
-  }
-  
   .content {
-    flex: 1;
+    padding: 20px;
   }
   
   .title {
@@ -25,10 +16,18 @@
     margin-bottom: 10px;
   }
   
-  .description {
-    font-size: 1.2em;
-    color: #555;
-    margin-bottom: 20px;
+  .servicesList {
+    list-style-type: none;
+    padding: 0;
   }
   
+  .servicesList li {
+    font-size: 1.1em;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .servicesList li strong {
+    color: #0077b6;
+  }
   

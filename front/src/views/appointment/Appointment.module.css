@@ -1,0 +1,18 @@
+.appointmentContainer {
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center; /* Para centrar el título */
+  }
+  
+  .title {
+    font-size: 2em;
+    color: #0077b6;
+    margin-bottom: 20px;
+  }
+  
+  .cardContainer {
+    display: flex;
+    flex-direction: column; /* Para mostrar las tarjetas una debajo de la otra */
+    align-items: center; /* Para centrar las tarjetas horizontalmente */
+  }
+  
